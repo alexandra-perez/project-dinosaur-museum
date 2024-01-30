@@ -34,7 +34,6 @@ function getLongestDinosaur(dinosaurs) {
       }
     }
   })
-
   return dinosaurObj;
 }
 
@@ -95,11 +94,30 @@ console.log(getDinosaurDescription(exampleDinosaurData, 'U9vuZmgKwUr'));
  *  //> ["WHQcpcOj0G"]
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
-  // iterate thru dinosaurs
-  // get "mya" key
-  // iterate thru mya
-  // check if either element in mya matches "mya" that was given
-      // if so,
+  let arr = [];
+
+  for (let dino of dinosaurs) {
+      let oneDateBool = dino.mya.length === 1 && (dino.mya[0] === mya || dino.mya[0] - 1 === mya);
+      let twoDatesBool = dino.mya.length === 2 && mya >= dino.mya[1] && mya <= dino.mya[0];
+
+      if (oneDateBool) {
+        pushToArray(arr, key, dino)
+      }
+      else if (twoDatesBool) {
+        pushToArray(arr, key, dino)
+      }
+  }
+  return arr;
+}
+
+/// Helper Function
+function pushToArray(arr, key, dino){
+  if (!key || !(key in dino)) {
+    arr.push(dino.dinosaurId);
+   }
+  else {
+    arr.push(dino[key]);
+   }
 }
 
 module.exports = {
