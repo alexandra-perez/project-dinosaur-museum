@@ -22,7 +22,22 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+function getLongestDinosaur(dinosaurs) {
+  let dinosaurObj = {};
+  let longestDinosaurLength = 0;
+
+  dinosaurs.forEach(dino => {
+    if (dino.lengthInMeters > longestDinosaurLength) {
+      longestDinosaurLength = dino.lengthInMeters;
+      dinosaurObj = {
+        [dino.name]: (longestDinosaurLength * 3.281)
+      }
+    }
+  })
+
+  return dinosaurObj;
+}
+
 
 /**
  * getDinosaurDescription()
@@ -44,12 +59,20 @@ function getLongestDinosaur(dinosaurs) {}
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
-
+function getDinosaurDescription(dinosaurs, id) {
+  let error = `A dinosaur with an ID of '${id}' cannot be found.`
+  for (const dinosaur of dinosaurs) {
+    if (dinosaur.dinosaurId === id) {
+      return `${dinosaur.name} (${dinosaur.pronunciation})\n${dinosaur.info} It lived in the ${dinosaur.period} period, over ${dinosaur.mya[dinosaur.mya.length-1]} million years ago.`;
+    }
+  }
+  return error;
+}
+console.log(getDinosaurDescription(exampleDinosaurData, 'U9vuZmgKwUr'));
 /**
  * getDinosaursAliveMya()
  * ---------------------
- * Returns an array of dinosaurs who were alive at the given `mya` (i.e. "millions of years ago") value. If a `key` is provided, returns the value of that key for each dinosaur alive at that time. Otherwise, returns the ID.
+ * Returns an array of dinosaurs who were alive at the given `mya` (i.e. "millions of years ago") value. If a `key` is provided, returns the value of that key for each dinosaur alive at that time. Otherwise, returns the ID
  *
  * If the dinosaur only has a single value for `mya`, allows for the `mya` value to be equal to the given value or one less. For example, if a dinosaur has a `mya` value of `[29]`, the dinosaur's information will be returned if `29` is entered or `28` is entered.
  *
@@ -71,7 +94,13 @@ function getDinosaurDescription(dinosaurs, id) {}
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+  // iterate thru dinosaurs
+  // get "mya" key
+  // iterate thru mya
+  // check if either element in mya matches "mya" that was given
+      // if so,
+}
 
 module.exports = {
   getLongestDinosaur,
