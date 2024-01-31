@@ -26,8 +26,77 @@ const exampleTicketData = require("../data/tickets");
  * @param {string} ticketInfo.entrantType - Represents the type of entrant. Prices change depending on the entrant.
  * @param {string[]} ticketInfo.extras - An array of strings where each string represent a different "extra" that can be added to the ticket. All strings should be keys under the `extras` key in `ticketData`.
  * @returns {number} The cost of the ticket in cents.
- *
- * EXAMPLE:
+ */
+
+// Returns the ticket price based on the ticket information supplied to the function. If either the `ticketInfo.ticketType` value or `ticketInfo.entrantType` value is incorrect, or any of the values inside of the `ticketInfo.extras` key is incorrect, an error message should be returned.
+
+//  * const ticketInfo = {
+//     ticketType: "general",
+//     entrantType: "child",
+//     extras: ["movie"],
+//   };
+
+function calculateTicketPrice(ticketData, ticketInfo) {
+  let cost = 0;
+
+  let entrants = ['child', 'adult', 'senior'];
+
+  if (!entrants.includes(ticketInfo.entrantType)) {
+    return `Entrant type '${ticketInfo.entrantType}' cannot be found.`;
+  }
+
+  if (!ticketData.hasOwnProperty(ticketInfo.ticketType)) {
+    return `Ticket type '${ticketInfo.ticketType}' cannot be found.`
+  }
+
+  if (ticketInfo.ticketType === "general") {
+    cost += ticketData.general.priceInCents[ticketInfo.entrantType];
+  } else {
+    cost += ticketData.membership.priceInCents[ticketInfo.entrantType];
+  }
+
+  for (const extra of ticketInfo.extras) {
+    if (!ticketData.extras[extra]) {
+      return `Extra type '${ticketInfo.extras}' cannot be found.`
+    }
+    cost += ticketData.extras[extra].priceInCents[ticketInfo.entrantType];
+  }
+
+  return cost;
+}
+
+
+
+// function calculateTicketPrice(ticketData, ticketInfo) {
+//   let cost = 0;
+
+//   // ERRORS
+//   // handles error if ticket type does not match an existing ticket type
+//   if (!ticketData.hasOwnProperty(ticketInfo.ticketType)) {
+//     return `Ticket type '${ticketInfo.ticketType}' cannot be found.`
+//   }
+//   // handles error if entrant type does not match an existing entrant type
+//   if (!ticketData[ticketInfo.ticketType].priceInCents.hasOwnProperty([ticketInfo.entrantType])) {
+//     return `Entrant type '${ticketInfo.entrantType}' cannot be found.`
+//   }
+//   // handles error if extra type does not match an existing extra type
+//   if (!ticketData.hasOwnProperty(ticketInfo.extras)) {
+//     return `Extra type '${ticketInfo.extras}' cannot be found.`
+//   }
+//   let ticketType = ticketData[ticketInfo.ticketType];
+//   let ticketPriceInCents = ticketData.ticketType.priceInCents;
+//   let extrasArr = ticketData[ticketInfo.extras];
+
+//   for (let i = 0; i < extrasArr.length; i++) {
+//     extraCost = ticketData.extras[extrasArr[i]].priceInCents[ticketInfo.entrantType];
+//     cost += ticketPriceInCents + extraCost;
+//   }
+
+//   return cost;
+// }
+
+
+ /* EXAMPLE:
  *  const ticketInfo = {
       ticketType: "general",
       entrantType: "adult",
@@ -35,7 +104,7 @@ const exampleTicketData = require("../data/tickets");
     };
     calculateTicketPrice(tickets, ticketInfo);
     //> 3000
- *  
+ *
  * EXAMPLE:
  *  const ticketInfo = {
       ticketType: "membership",
@@ -54,7 +123,6 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
 
 /**
  * purchaseTickets()
@@ -62,7 +130,7 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
  * Returns a receipt based off of a number of purchase. Each "purchase" maintains the shape from `ticketInfo` in the previous function.
  *
  * Any errors that would occur as a result of incorrect ticket information should be surfaced in the same way it is in the previous function.
- * 
+ *
  * NOTE: Pay close attention to the format in the examples below and tests. You will need to have the same format to get the tests to pass.
  *
  * @param {Object} ticketData - An object containing data about prices to enter the museum. See the `data/tickets.js` file for an example of the input.
