@@ -148,7 +148,61 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     //> "Ticket type 'discount' cannot be found."
  */
 function purchaseTickets(ticketData, purchases) {
+  let total = 0;
+  let receipt = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n`;
 
+  for (const purchase of purchases) {
+    let cost = 0;
+
+    if (purchase.ticketType === 'general') {
+      cost += ticketData.general.priceInCents[purchase.entrantType];
+    } else if (purchase.ticketType === 'membership') {
+      cost += ticketData.membership.priceInCents[purchase.entrantType];
+    } else {
+      return `Ticket type '${purchase.ticketType}' cannot be found.`;
+    }
+
+    const entrants = ['child', 'adult', 'senior'];
+    if (!entrants.includes(purchase.entrantType)) {
+      return `Entrant type '${purchase.entrantType}' cannot be found.`;
+    }
+
+    for (const extra of purchase.extras) {
+      if (!ticketData.extras[extra]) {
+        return `Extra type '${extra}' cannot be found.`;
+      }
+      cost += ticketData.extras[extra].priceInCents[purchase.entrantType];
+    }
+
+    let costInDollars = (cost / 100).toFixed(2);
+
+    // Use += to append to the receipt
+    receipt += `${capitalize(purchase.entrantType)} ${capitalize(
+      purchase.ticketType
+    )} Admission: $${costInDollars}`;
+
+    if (purchase.extras.length > 0) {
+      receipt += ` (${purchase.extras
+        .map((extra) => capitalize(extra))
+        .join(' Access, ')} Access)`;
+    }
+
+    receipt += '\n';
+
+    total += cost;
+  }
+
+  // Use += to append to the receipt
+  receipt += `-------------------------------------------\nTOTAL: $${(
+    total / 100
+  ).toFixed(2)}`;
+
+  return receipt;
+}
+
+// helper function
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // Do not change anything below this line.
