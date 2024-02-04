@@ -120,6 +120,61 @@ function pushToArray(arr, key, dino){
    }
 }
 
+
+// Added function: Selects a random dinosaur from the Dinosaur Museum and generates a fun fact to output to the user.
+function getRandomDinosaur() { // selects random dinosaur object from dinosaur data
+  const index = Math.floor(Math.random() * dinosaurs.length);
+  return dinosaurs[index];
+}
+
+function getRandomDinosaurFunFact(randomDinosaur) { // displays fun fact based off of the selected dinosaur
+  switch (randomDinosaur.name) {
+    case 'Allosaurus':
+      return 'Did you know that Allosaurus had a strong bite force and serrated teeth, making it a formidable predator in the Late Jurassic?';
+    case 'Apatosaurus':
+      return 'Did you know that Apatosaurus, despite its massive size, had a relatively small head? Its long neck and tail balanced out its body.';
+    case 'Brachiosaurus':
+      return 'Did you know that Brachiosaurus had an elongated neck that allowed it to feed on vegetation high above the ground, much like a giraffe?';
+    case 'Compsognathus':
+      return 'Did you know that Compsognathus was one of the smallest known dinosaurs, about the size of a chicken, but it was a swift and agile predator?';
+    case 'Dracorex':
+      return 'Did you know that Dracorex, with its dragon-like name, was discovered with a skull that resembled a mythical dragon, featuring spikes and bumps?';
+    case 'Elasmosaurus':
+      return 'Did you know that Elasmosaurus was a marine reptile with an extremely long neck, accounting for more than half of its total length?';
+    case 'Giraffatitan':
+      return 'Did you know that Giraffatitan was closely related to Brachiosaurus and had a similar structure, with an elevated posture and long neck?';
+    case 'Indosuchus':
+      return 'Did you know that Indosuchus had a crested skull and was a theropod dinosaur, likely resembling a mix of a bird and a fearsome predator?';
+    case 'Jingshanosaurus':
+      return 'Did you know that Jingshanosaurus was a small herbivorous dinosaur with a long neck and bipedal stance, roaming the Early Cretaceous landscape?';
+    case 'Khaan':
+      return 'Did you know that Khaan was a small, feathered dinosaur belonging to the oviraptorosaur group, known for its bird-like features?';
+    case 'Minmi':
+      return 'Did you know that Minmi was a small, armored dinosaur with bony plates on its back, providing protection against potential predators?';
+    case 'Ouranosaurus':
+      return 'Did you know that Ouranosaurus had a sail-like structure on its back, possibly used for temperature regulation or display during the Early Cretaceous?';
+    case 'Parasaurolophus':
+      return 'Did you know that Parasaurolophus had a distinctive crest on its head, which may have been used for communication through unique sounds?';
+    case 'Spinosaurus':
+      return 'Did you know that Spinosaurus was a semi-aquatic dinosaur with adaptations for swimming, including a long crocodile-like snout?';
+    case 'Tyrannosaurus':
+      return 'Did you know that Tyrannosaurus rex, or T. rex, had one of the strongest bites of any land animal, capable of crushing bone with its powerful jaws?';
+    case 'Utahraptor':
+      return 'Did you know that Utahraptor was a feathered dinosaur and a close relative of Velociraptor, showcasing the early evolution of feathers in theropods?';
+    case 'Vulcanodon':
+      return 'Did you know that Vulcanodon was an early sauropod dinosaur with a long neck and tail, representing the herbivorous giants of the Early Jurassic?';
+    case 'Xenoceratops':
+      return 'Did you know that Xenoceratops had a frill and horns on its head, making it one of the unique ceratopsians from the Late Cretaceous?';
+    case 'Zephyrosaurus':
+      return 'Did you know that Zephyrosaurus was a small, bipedal dinosaur with a long tail, likely darting around in the Late Cretaceous landscape?';
+  }
+}
+// Test
+const randomDinosaur = getRandomDinosaur();
+const funFact = getRandomDinosaurFunFact(randomDinosaur);
+
+console.log(funFact);
+
 module.exports = {
   getLongestDinosaur,
   getDinosaurDescription,
